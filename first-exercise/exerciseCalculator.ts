@@ -72,7 +72,7 @@ try {
   const args: Array<string> = getArguments();
 
   // Last item of the arguments is the target value
-  const target: number = Number(args[args.length - 1]);
+  const target = Number(args[args.length - 1]);
   const values: Array<number> = args.reduce(
     (values: Array<number>, currentValue: string, currentIndex: number) => {
       if (currentIndex > 1 && currentIndex < args.length - 1) {
@@ -92,3 +92,5 @@ try {
   }
   console.log(errorMessage);
 }
+
+export { calculateExercises };
