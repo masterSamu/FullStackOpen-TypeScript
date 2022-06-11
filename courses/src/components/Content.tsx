@@ -1,21 +1,15 @@
-type Course = {
-  name: string;
-  exerciseCount: number;
-};
+import { CoursePart } from "../types";
+import Part from "./Part";
 
 interface Props {
-  courses: Array<Course>;
+  courses: Array<CoursePart>;
 }
 
 const Content = ({ courses }: Props) => {
   return (
     <div>
       {courses.map((course) => {
-        return (
-          <p key={course.name}>
-            {course.name} {course.exerciseCount}
-          </p>
-        );
+        return <Part key={course.name} part={course} />;
       })}
     </div>
   );
