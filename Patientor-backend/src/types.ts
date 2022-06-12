@@ -13,10 +13,17 @@ export type Diagnose = {
 export interface Patient {
   id: string;
   name: string;
-  dateOfBirth: string;
-  gender: Gender;
+  ssn: string;
   occupation: string;
-  ssn?: string;
+  gender: Gender;
+  dateOfBirth: string;
+  entries: Entry[]
+}
+
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+export interface Entry {
 }
 
 export type NewPatient = Omit<Patient, "id">;
+
+export type PublicPatient = Omit<Patient, 'ssn' | 'entries' >;
