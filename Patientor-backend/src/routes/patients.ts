@@ -42,11 +42,35 @@ router.post("/:id/entries", (req, res) => {
     const description = entry.description;
 
     if (!date) return res.send("malformatted date: " + date).status(400);
-    if (!type) return res.send("malformatted type: " + type).status(400);
     if (!specialist)
       return res.send("malformatted specialist: " + specialist).status(400);
     if (!description)
       return res.send("malformatted date: " + description).status(400);
+
+    if (!type) return res.send("malformatted type: " + type).status(400);
+    switch (type) {
+      case "HealthCheck":
+        if (!entry.healthCheckRating) {
+          return res
+            .send("malformatted healthcheckRating: " + entry.healthCheckRating)
+            .status(400);
+        }
+        break;
+      case "Hospital":
+        if (!entry.discharge) {
+          return res
+            .send("malformatted discharge: " + entry.discharge)
+            .status(400);
+        }
+        break;
+      case "OccupationalHealthcare":
+        if (!entry.employerName) {
+          return res
+            .send("malformatted employerName: " + entry.employerName)
+            .status(400);
+        }
+        break;
+    }
 
     const patient: Patient | undefined = patientService.addEntryToPatient(
       entry,
@@ -55,7 +79,7 @@ router.post("/:id/entries", (req, res) => {
     if (patient) {
       return res.send(patient).status(200);
     }
-    return res.send("Something went wrong").status(400);
+    return res.send("Something went wrong...").status(400);
   } catch (error: unknown) {
     let errorMessage = "Something went wrong.";
     if (error instanceof Error) {
